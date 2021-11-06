@@ -1,0 +1,251 @@
+name: station
+base: core20
+version: '2.1'
+summary: MAUI Station Terminal Emulator
+description: |
+  MAUI Station Terminal Emulator
+
+grade: stable # must be 'stable' to release into candidate/stable channels or 'devel'
+confinement: devmode   #use classic if all fs required OR if you need local gtk2 theming
+
+
+package-repositories:
+  - type: apt
+    formats: [deb, deb-src]
+    components: [main]
+    suites: [focal]
+    key-id: 444DABCF3667D0283F894EDDE6D4736255751E5D
+    url: http://archive.neon.kde.org/user
+
+parts:
+
+  mauikit:
+    source: https://invent.kde.org/maui/mauikit.git
+    source-branch: v2.1
+    plugin: cmake
+    cmake-parameters:
+      - -DCMAKE_BUILD_TYPE=Release
+      - -DCMAKE_INSTALL_PREFIX=/usr
+    stage-packages:
+      - qml-module-qtgraphicaleffects
+      - qml-module-qtquick-shapes
+      - gettext
+      - libcanberra0
+      - libdbusmenu-qt5-2
+      - libgamin0
+      - libkf5configcore5
+      - libkf5coreaddons5
+      - libkf5i18n5
+      - libkf5notifications5
+      - libkf5windowsystem5
+      - libltdl7
+      - libogg0
+      - libqt5texttospeech5
+      - libqt5x11extras5
+      - libtdb1
+      - libvorbis0a
+      - libvorbisfile3      
+    build-packages:
+      - g++ 
+      - extra-cmake-modules
+      - libxcb-icccm4-dev
+      - libxcb-shape0-dev 
+      - libqt5x11extras5-dev
+      - libkf5config-dev
+      - libkf5coreaddons-dev
+      - libkf5i18n-dev
+      - libkf5kio-dev
+      - libkf5notifications-dev
+      - libkf5service-dev
+      - libqt5svg5-dev
+      - libqt5webview5-dev
+      - libqt5xmlpatterns5-dev
+      - desktop-file-utils 
+      - qt5-qmake 
+      - qtbase5-dev 
+      - qtdeclarative5-dev 
+      - qtquickcontrols2-5-dev 
+      - qtwebengine5-dev 
+      - qml-module-qtgraphicaleffects
+      - qml-module-qtquick-shapes      
+      - gettext
+    after: [ desktop-qt5 ]
+
+  mauikit-filebrowsing:
+    source: https://invent.kde.org/maui/mauikit-filebrowsing.git
+    source-branch: v2.1
+    plugin: cmake
+    cmake-parameters:
+      - -DCMAKE_BUILD_TYPE=Release
+      - -DCMAKE_INSTALL_PREFIX=/usr
+    stage-packages:
+      - qml-module-qtgraphicaleffects
+      - qml-module-qtquick-shapes
+      - gettext
+      - libcanberra0
+      - libdbusmenu-qt5-2
+      - libgamin0
+      - libkf5archive5
+      - libkf5authcore5
+      - libkf5bookmarks5
+      - libkf5codecs5
+      - libkf5completion5
+      - libkf5configcore5
+      - libkf5configgui5
+      - libkf5configwidgets5
+      - libkf5coreaddons5
+      - libkf5crash5
+      - libkf5dbusaddons5
+      - libkf5globalaccel5
+      - libkf5guiaddons5
+      - libkf5i18n5
+      - libkf5iconthemes5
+      - libkf5itemviews5
+      - libkf5jobwidgets5
+      - libkf5kiocore5
+      - libkf5kiofilewidgets5
+      - libkf5kiogui5
+      - libkf5kiowidgets5
+      - libkf5notifications5
+      - libkf5service5
+      - libkf5solid5
+      - libkf5widgetsaddons5
+      - libkf5windowsystem5
+      - libkf5xmlgui5
+      - libltdl7
+      - libogg0
+      - libqt5printsupport5
+      - libqt5sql5
+      - libqt5texttospeech5
+      - libqt5waylandclient5
+      - libqt5x11extras5
+      - libqt5xml5
+      - libtdb1
+      - libvorbis0a
+      - libvorbisfile3
+      - libwayland-cursor0      
+    build-packages:
+      - g++ 
+      - extra-cmake-modules
+      - libxcb-icccm4-dev
+      - libxcb-shape0-dev 
+      - libqt5x11extras5-dev
+      - qml-module-qtgraphicaleffects
+      - qml-module-qtquick-shapes      
+      - gettext
+    after: 
+      - desktop-qt5
+      - mauikit
+
+  kirigami:
+    plugin: dump
+    source: http://archive.ubuntu.com/ubuntu/pool/universe/k/kirigami/qml-module-org-kde-kirigami_1.1.0-2_amd64.deb
+
+  station:
+    source: https://invent.kde.org/maui/station.git
+    source-branch: v2.1
+    plugin: cmake
+    cmake-parameters:
+      - -DCMAKE_BUILD_TYPE=Release
+      - -DCMAKE_INSTALL_PREFIX=/usr
+    build-packages:
+      - g++ 
+      - extra-cmake-modules
+      - libxcb-icccm4-dev
+      - libxcb-shape0-dev 
+      - libqt5x11extras5-dev
+      - qml-module-qtgraphicaleffects
+      - qml-module-qtquick-shapes      
+      - gettext
+    stage-packages:
+      - qml-module-qtgraphicaleffects
+      - qml-module-qtquick-shapes
+      - qml-module-qtquick-controls
+      - qml-module-qtquick-controls2
+      - qml-module-qt-labs-settings
+      - gettext
+      - libcanberra0
+      - libdbusmenu-qt5-2
+      - libgamin0
+      - libkf5archive5
+      - libkf5authcore5
+      - libkf5bookmarks5
+      - libkf5codecs5
+      - libkf5completion5
+      - libkf5configcore5
+      - libkf5configgui5
+      - libkf5configwidgets5
+      - libkf5coreaddons5
+      - libkf5crash5
+      - libkf5dbusaddons5
+      - libkf5globalaccel5
+      - libkf5guiaddons5
+      - libkf5i18n5
+      - libkf5iconthemes5
+      - libkf5itemviews5
+      - libkf5jobwidgets5
+      - libkf5kiocore5
+      - libkf5kiofilewidgets5
+      - libkf5kiogui5
+      - libkf5kiowidgets5
+      - libkf5notifications5
+      - libkf5service5
+      - libkf5solid5
+      - libkf5widgetsaddons5
+      - libkf5windowsystem5
+      - libkf5xmlgui5
+      - libltdl7
+      - libogg0
+      - libqt5printsupport5
+      - libqt5sql5
+      - libqt5texttospeech5
+      - libqt5waylandclient5
+      - libqt5x11extras5
+      - libqt5xml5
+      - libtdb1
+      - libvorbis0a
+      - libvorbisfile3
+      - libwayland-cursor0  
+    after: 
+      - desktop-qt5          
+      - kirigami
+      - mauikit-filebrowsing
+
+  desktop-qt5:
+      source: https://github.com/ubuntu/snapcraft-desktop-helpers.git
+      source-subdir: qt/
+      plugin: make
+      make-parameters: ["FLAVOR=qt5"]
+      build-packages:
+        - qtbase5-dev
+        - dpkg-dev
+      stage-packages:
+        - libxkbcommon0
+        - ttf-ubuntu-font-family
+        - dmz-cursor-theme
+        - light-themes
+        - shared-mime-info
+        - libqt5gui5
+        - libgdk-pixbuf2.0-0
+        - libqt5svg5
+        - locales-all
+
+  runtimedeps:
+    plugin: nil
+    stage-packages:
+      - qml-module-org-kde-kirigami2
+      - qml-module-qmltermwidget
+
+apps:
+  station:
+    command: bin/desktop-launch $SNAP/usr/bin/station
+    plugs:
+      - opengl
+      - network
+      - desktop
+      - desktop-legacy
+      - gsettings
+      - unity7
+      - x11
+      - wayland
+      - home
